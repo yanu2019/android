@@ -1,9 +1,10 @@
 package com.yin.hy;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,6 +57,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setPositiveButton("OK",this);
         dialog.setNegativeButton("CANCEL",this);
         dialog.show();
+    }
+
+    protected void savePassword(String username,String password){
+        SharedPreferences.Editor editor = getSharedPreferences(username+"-logincheck", Context.MODE_PRIVATE).edit();
+        editor.putString(username,password);
+        editor.apply();
     }
 
 }
