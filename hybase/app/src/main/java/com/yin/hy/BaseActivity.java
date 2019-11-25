@@ -9,18 +9,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.yin.hy.Entity.LoginInfo;
 import com.yin.hy.utils.ActivityManager;
 
-public class BaseActivity extends AppCompatActivity implements View.OnClickListener,DialogInterface.OnClickListener{
+import org.litepal.LitePal;
+
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener,DialogInterface.OnClickListener, CompoundButton.OnCheckedChangeListener{
     protected Button button;
     protected Intent intent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LitePal.getDatabase();
         Log.d(getClass().getSimpleName(),"onCreate");
         ActivityManager.addActivity(this);
     }
@@ -44,25 +51,70 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     //按钮初始化
     protected void btnInit(int... btn){
         for(int i:btn){
-            button = (Button)findViewById(i);
+            button = findViewById(i);
             button.setOnClickListener(this);
         }
     }
-    //对话框
-    protected void createDialog(String title, String message, Boolean cancelable,int icon,AlertDialog.Builder dialog){
+    //复选框初始化
+    protected void cbxInit(int... cbx){
+        for(int i:cbx){
+            CheckBox checkBox = findViewById(i);
+            checkBox.setOnCheckedChangeListener(this);
+        }
+    }
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+    }
+
+    /**
+     * 对话框
+     * @param title
+     * @param message
+     * @param cancelable
+     * @param dialog
+     */
+    protected void createDialog(String title, String message, Boolean cancelable,AlertDialog.Builder dialog){
         dialog.setTitle(title);
         dialog.setMessage(message);
-        dialog.setIcon(icon);
         dialog.setCancelable(cancelable);
         dialog.setPositiveButton("OK",this);
         dialog.setNegativeButton("CANCEL",this);
         dialog.show();
     }
 
-    protected void savePassword(String username,String password){
-        SharedPreferences.Editor editor = getSharedPreferences(username+"-logincheck", Context.MODE_PRIVATE).edit();
-        editor.putString(username,password);
-        editor.apply();
+
+    /**
+     * SharedReference文件存储
+     * @param username
+     * @param password
+     * @param autoLogin 自动登录
+     * @throws Exception
+     */
+    protected void savePassword(String username,String password,Boolean autoLogin)throws Exception{
+        try{
+            SharedPreferences.Editor editor = getSharedPreferences(username+"-logincheck", Context.MODE_PRIVATE).edit();
+            editor.putString(username,password);
+            editor.putBoolean("autoLogin",autoLogin);
+            editor.apply();
+        }catch (Exception ex){
+            throw ex;
+        }
+    }
+
+    /**
+     * LitePal本地数据库存储
+     * @param username
+     * @param password
+     * @throws Exception
+     */
+    protected void savePassword(String username,String password,Boolean autoLogin,Boolean isNextAutoLoginAcct)throws Exception{
+        try{
+            LoginInfo info = new LoginInfo(username,password,autoLogin,isNextAutoLoginAcct);
+            info.save();
+        }catch (Exception ex){
+            throw ex;
+        }
     }
 
 }

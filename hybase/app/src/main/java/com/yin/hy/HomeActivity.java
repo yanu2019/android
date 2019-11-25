@@ -20,7 +20,6 @@ import com.yin.hy.utils.ActivityStarter;
 public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
     private AlertDialog.Builder tempDialog;
-    public static final int EXIT_DIALOG_ICON = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +37,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
             case R.id.btn_home_login:
                 startActivityForResult(new Intent(HomeActivity.this, LoginActivity.class),1);
             default:
+                super.onClick(v);
         }
     }
 
@@ -69,7 +69,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.menu_main_exit:
                 tempDialog = new AlertDialog.Builder(HomeActivity.this);
-                createDialog("退出系统","确定退出吗?",true,EXIT_DIALOG_ICON,tempDialog);
+                createDialog("退出系统","确定退出吗?",true,tempDialog);
                 break;
             default:
         }

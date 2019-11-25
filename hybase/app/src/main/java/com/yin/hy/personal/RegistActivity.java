@@ -1,7 +1,6 @@
 package com.yin.hy.personal;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.yin.hy.BaseActivity;
@@ -21,6 +20,5 @@ public class RegistActivity extends BaseActivity {
     private void saveRegistInfo(RegistInfo info){
         IoStreamUtl.inObject(info.getUsername()+"-info",Context.MODE_PRIVATE,RegistActivity.this,info);
     }
-    //SharedReference文件存储,记录账号-密码
-
+    
 }

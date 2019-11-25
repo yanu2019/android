@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<litepal>
+    <dbname value = "login_info"></dbname>
+    <version value = "1"></version>
+
+    <list>
+        <mapping class="com.yin.hy.Entity.RegistInfo"></mapping>
+        <mapping class="com.yin.hy.Entity.LoginInfo"></mapping>
+    </list>
+</litepal>

@@ -1,9 +1,11 @@
 package com.yin.hy.Entity;
 
+
+
 import java.io.Serializable;
 
-public class RegistInfo implements Serializable{
-    private String id;
+public class RegistInfo extends BaseEntity implements Serializable{
+    private int id;
     private String username;
     private String password;
     private String gender;
@@ -11,12 +13,30 @@ public class RegistInfo implements Serializable{
     private String address;
     private String email;
     private String phone;
+    private String registTime;
+    protected String operateTime;
 
-    public String getId() {
+    public String getOperateTime() {
+        return operateTime;
+    }
+
+    public void setOperateTime(String operateTime) {
+        this.operateTime = operateTime;
+    }
+
+    public String getRegistTime() {
+        return registTime;
+    }
+
+    public void setRegistTime(String registTime) {
+        this.registTime = registTime;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -79,7 +99,7 @@ public class RegistInfo implements Serializable{
     @Override
     public String toString() {
         return "RegistInfo{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", gender='" + gender + '\'' +
